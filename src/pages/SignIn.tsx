@@ -1,16 +1,23 @@
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { useState } from "react";
+import { useActionState } from "react";
+import { email } from "zod/v4";
 
 export function SignIn() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, formAction, isLoading] = useActionState(signIn, {
+    email: "",
+    password: "",
+  });
 
-  function onAction(formData: FormData) {
-    console.log(formData.get("email"));
+  async function signIn(prevState: any, formData: FormData) {
+    const email = formData.get("email");
+    const password = formData.get("password");
+   
+    return {email, password};
   }
 
   return (
-    <form action={onAction} className="w-full flex flex-col gap-4">
+    <form action={formAction} className="w-full flex flex-col gap-4">
       <Input
         required
         name="email"
