@@ -45,9 +45,7 @@ export function Refund() {
         amount: amount.replace(",", "."),
       });
 
-      console.log(data);
-
-      //navigate("/confirm", { state: { fromSubmit: true } });
+      navigate("/confirm", { state: { fromSubmit: true } });
 
     } catch (error) {
       console.error(error);
