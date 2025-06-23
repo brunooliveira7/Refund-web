@@ -7,6 +7,8 @@ import { Button } from "../components/Button";
 import { useNavigate, useParams } from "react-router";
 import fileSvg from "../assets/file.svg";
 import { z, ZodError } from "zod";
+import { api } from "../services/api";
+import { AxiosError } from "axios";
 
 const RefundSchema = z.object({
   name: z
@@ -29,7 +31,7 @@ export function Refund() {
 
   const params = useParams<{ id: string }>();
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (params.id) {
@@ -45,14 +47,23 @@ export function Refund() {
         amount: amount.replace(",", "."),
       });
 
-      navigate("/confirm", { state: { fromSubmit: true } });
+      await api.post("/refunds", {
+        ...data,
+        filename: "12345656786877978956534535789.pdf",
+      });
 
+      navigate("/confirm", { state: { fromSubmit: true } });
     } catch (error) {
       console.error(error);
 
       if (error instanceof ZodError) {
         return alert(error.issues[0].message);
       }
+
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message);
+      }
+
       alert(
         "Não foi possível enviar a solicitação, tente novamente mais tarde."
       );
