@@ -9,28 +9,20 @@ import { Pagination } from "../components/Pagination";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
 
-const REFUND_EXAMPLE = {
-  id: "123",
-  name: "Bruno",
-  category: "Transporte",
-  amount: formatCurrency(34.5),
-  categoryImg: CATEGORIES["transport"].icon,
-};
-
 const PER_PAGE = 5;
 
 export function Dashboard() {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
   const [totalOfPages, setTotalOfPages] = useState(0);
-  const [refunds, setRefunds] = useState<RefundItemProps[]>([REFUND_EXAMPLE]);
+  const [refunds, setRefunds] = useState<RefundItemProps[]>([]);
 
   async function fetchRefunds() {
     try {
-      const response = await api.get(
+      const response = await api.get<RefundsPaginationAPIResponse>(
         `/refunds?name=${name.trim()}&page=${page}&perPage=${PER_PAGE}`
       );
-      console.log(response.data);
+      
     } catch (error) {
       console.log(error);
 
