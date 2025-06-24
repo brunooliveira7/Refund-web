@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { Button } from "../components/Button";
 import searchSVG from "../assets/search.svg";
 import { RefundItem, type RefundItemProps } from "../components/RefundItem";
-import { CATEGORIES } from "../utils/categories";
 import { formatCurrency } from "../utils/formatCurrency";
 import { Pagination } from "../components/Pagination";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
+import { CATEGORIES } from "../utils/categories";
 
 const PER_PAGE = 5;
 
@@ -22,6 +22,18 @@ export function Dashboard() {
       const response = await api.get<RefundsPaginationAPIResponse>(
         `/refunds?name=${name.trim()}&page=${page}&perPage=${PER_PAGE}`
       );
+
+      setRefunds(
+        response.data.refunds.map((refund) => ({
+          id: refund.id,
+          name: refund.user.name,
+          description: refund.name,
+          amount: formatCurrency(refund.amount),
+          categoryImg: CATEGORIES[refund.category].icon,
+        }))
+      );
+
+      setTotalOfPages(response.data.pagination.totalPages);
       
     } catch (error) {
       console.log(error);
