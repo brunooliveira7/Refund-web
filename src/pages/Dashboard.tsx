@@ -34,6 +34,7 @@ export function Dashboard() {
       );
 
       setTotalOfPages(response.data.pagination.totalPages);
+      
     } catch (error) {
       console.log(error);
 

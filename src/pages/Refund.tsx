@@ -1,7 +1,7 @@
 import { Input } from "../components/Input";
 import { Select } from "../components/Select";
 import { CATEGORIES, CATEGORIES_KEYS } from "../utils/categories";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Upload } from "../components/Upload";
 import { Button } from "../components/Button";
 import { useNavigate, useParams } from "react-router";
@@ -41,7 +41,7 @@ export function Refund() {
     try {
       setIsLoading(true);
 
-      if(!file) {
+      if (!file) {
         return alert("Por favor, envie um comprovante para continuar.");
       }
 
@@ -80,6 +80,30 @@ export function Refund() {
       setIsLoading(false);
     }
   }
+
+  async function fetchRefund(id: string) {
+    try {
+      const response = await api.get<RefundAPIResponse>(`/refunds/${id}`);
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof AxiosError) {
+        return alert(error.response?.data.message);
+      }
+
+      alert(
+        "Não foi possível carregar a solicitação, tente novamente mais tarde."
+      );
+    }
+  }
+
+  useEffect(() => {
+    if (params.id) {
+      fetchRefund(params.id);
+    }
+  }, [params.id]);
 
   return (
     <form
