@@ -9,6 +9,7 @@ import fileSvg from "../assets/file.svg";
 import { z, ZodError } from "zod";
 import { api } from "../services/api";
 import { AxiosError } from "axios";
+import { formatCurrency } from "../utils/formatCurrency";
 
 const RefundSchema = z.object({
   name: z
@@ -26,6 +27,7 @@ export function Refund() {
   const [amount, setAmount] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [fileURL, setFileURL] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -83,9 +85,13 @@ export function Refund() {
 
   async function fetchRefund(id: string) {
     try {
-      const response = await api.get<RefundAPIResponse>(`/refunds/${id}`);
+      const { data } = await api.get<RefundAPIResponse>(`/refunds/${id}`);
 
-      console.log(response.data);
+      setName(data.name);
+      setCategory(data.category);
+      setAmount(formatCurrency(data.amount));
+      setFileURL(data.filename);
+
     } catch (error) {
       console.error(error);
 
@@ -152,7 +158,7 @@ export function Refund() {
         />
       </div>
 
-      {params.id ? (
+      {params.id && fileURL? (
         <a
           href="https://www.rocketseat.com.br/"
           target="_blank"
