@@ -9,7 +9,7 @@ import { api } from "../services/api";
 import { AxiosError } from "axios";
 import { CATEGORIES } from "../utils/categories";
 
-const PER_PAGE = 5;
+const PER_PAGE = 4;
 
 export function Dashboard() {
   const [name, setName] = useState("");
