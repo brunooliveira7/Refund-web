@@ -33,15 +33,37 @@ Aplicação web construída com **React** no front-end e **Node.js** no back-end
 
 ### Front-end
 - React + TypeScript
+- Tailwind CSS
 - React Router DOM
 - Axios
 - Zod (validações)
+- clsx + tailwind-merge
 - Context API (gerenciamento de autenticação)
 
 ### Back-end (via API)
 - Node.js
 
 ---
+
+<p align="center">
+  <img alt="Refund-web" src="https://github.com/brunooliveira7/React-refund/blob/main/public/Sign%20in%20and%20Sign%20Up.png">
+</p>
+
+<p align="center">
+  <img alt="Refund-web" src="https://github.com/brunooliveira7/React-refund/blob/main/public/Employee.png">
+</p>
+
+<p align="center">
+  <img alt="Refund-web" src="https://github.com/brunooliveira7/React-refund/blob/main/public/Manager.png">
+</p>
+
+---
+
+### ✍️ Autor
+Desenvolvido por Bruno Oliveira 🧠
+
+## 📝 Licença
+Este projeto está sob a licença MIT.
 
 
 
