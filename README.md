@@ -37,7 +37,7 @@ Aplicação web construída com **React** no front-end e **Node.js** no back-end
 - React Router DOM
 - Axios
 - Zod (validações)
-- clsx + tailwind-merge
+- Tailwind-merge
 - Context API (gerenciamento de autenticação)
 
 ### Back-end (via API)
